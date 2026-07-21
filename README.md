@@ -101,14 +101,6 @@ Run the application
 python main.py
 ```
 
----
-
-# 📷 Screenshots
-
-> Screenshots will be added soon.
-
----
-
 # 🔮 Future Improvements
 
 - Dark Mode
