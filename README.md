@@ -103,9 +103,53 @@ python main.py
 
 ---
 
-# 📷 Screenshots
+# 📷 Application Screenshots
 
-> Screenshots will be added soon.
+## 🔐 Login Page
+
+![Login](screenshots/login.png)
+
+---
+
+## 📝 Register Page
+
+![Register](screenshots/register.png)
+
+---
+
+## 🏠 Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+## 💰 Income Management
+
+![Income](screenshots/income.png)
+
+---
+
+## 💸 Expense Management
+
+![Expense](screenshots/expense.png)
+
+---
+
+## 📈 Analytics
+
+![Analytics](screenshots/analytics.png)
+
+---
+
+## 📄 Reports
+
+![Reports](screenshots/reports.png)
+
+---
+
+## 👨‍💼 Admin Panel
+
+![Admin Panel](screenshots/admin_panel.png)
 
 ---
 
