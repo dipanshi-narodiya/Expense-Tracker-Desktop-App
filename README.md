@@ -61,11 +61,12 @@ This application helps users manage their daily income, expenses, monthly budget
 
 # 📂 Project Structure
 
-```
+```text
 expense_tracker/
 │
 ├── assets/
 ├── database/
+├── screenshots/
 ├── ui/
 ├── utils/
 ├── main.py
