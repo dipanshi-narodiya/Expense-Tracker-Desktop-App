@@ -37,78 +37,147 @@ class IncomeWindow:
 
     def create_widgets(self):
 
-        main = ttk.Frame(
+        # ==========================================
+        # Root Background
+        # ==========================================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            padding=30
+            bg="#EEF2FF"
         )
 
-        main.pack(fill="both", expand=True)
+        container.pack(
+            fill="both",
+            expand=True
+        )
 
-        # ----------------------------------
+        # ==========================================
+        # Header
+        # ==========================================
+
+        header = tk.Frame(
+            container,
+            bg="#2563EB",
+            height=70
+        )
+
+        header.pack(
+            fill="x"
+        )
+
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="💵 Add Income",
+            font=("Segoe UI",24,"bold"),
+            bg="#2563EB",
+            fg="white"
+        ).pack(
+            pady=18
+        )
+
+        # ==========================================
+        # White Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            bd=0,
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            pady=30,
+            padx=40,
+            fill="both",
+            expand=True
+        )
+
+        # ==========================================
         # Title
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="💰 Add Income",
-            font=("Arial", 22, "bold")
+        tk.Label(
+            self.card,
+            text="Income Details",
+            font=("Segoe UI",20,"bold"),
+            bg="white",
+            fg="#111827"
         ).grid(
             row=0,
             column=0,
             columnspan=2,
-            pady=(0, 30)
+            pady=(25,30)
         )
 
-        # ----------------------------------
+        # ==========================================
         # Date
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Date",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📅 Date",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=1,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.date_picker = DateEntry(
-            main,
-            width=37,
+            self.card,
+            width=30,
             date_pattern="dd-mm-yyyy",
-            font=("Arial", 10)
+            font=("Segoe UI",11)
         )
 
         self.date_picker.grid(
             row=1,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Source
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Source",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="💼 Source",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=2,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.source_var = tk.StringVar()
 
         self.source_combo = ttk.Combobox(
-            main,
+            self.card,
             textvariable=self.source_var,
-            width=37,
-            state="readonly"
+            width=32,
+            state="readonly",
+            font=("Segoe UI",11)
         )
 
         self.source_combo["values"] = (
@@ -121,66 +190,77 @@ class IncomeWindow:
             "Other"
         )
 
-        # Default Source
         self.source_combo.current(0)
 
         self.source_combo.grid(
             row=2,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Amount
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Amount (₹)",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="💰 Amount (₹)",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=3,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.amount_var = tk.StringVar()
 
         self.amount_entry = ttk.Entry(
-            main,
+            self.card,
             textvariable=self.amount_var,
-            width=40
+            font=("Segoe UI",11),
+            width=35
         )
 
         self.amount_entry.grid(
             row=3,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
         # ==========================================
         # Payment Mode
         # ==========================================
 
-        ttk.Label(
-            main,
-            text="Payment Mode",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="💳 Payment Mode",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=4,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.payment_var = tk.StringVar()
 
         self.payment_combo = ttk.Combobox(
-            main,
+            self.card,
             textvariable=self.payment_var,
-            width=37,
-            state="readonly"
+            width=32,
+            state="readonly",
+            font=("Segoe UI",11)
         )
 
         self.payment_combo["values"] = (
@@ -191,63 +271,86 @@ class IncomeWindow:
             "Net Banking"
         )
 
+        self.payment_combo.current(0)
+
         self.payment_combo.grid(
             row=4,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        self.payment_combo.current(0)
-        # ----------------------------------
+        # ==========================================
         # Notes
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Notes",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📝 Notes",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=5,
             column=0,
             sticky="nw",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.notes = tk.Text(
-            main,
-            width=40,
+            self.card,
+            width=35,
             height=6,
-            font=("Arial", 10)
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1,
+            wrap="word"
         )
 
         self.notes.grid(
             row=5,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Save Button
-        # ----------------------------------
+        # ==========================================
 
-        tk.Button(
-            main,
+        self.save_button = tk.Button(
+            self.card,
             text="💾 Save Income",
-            bg="#4CAF50",
+            bg="#2563EB",
             fg="white",
-            activebackground="#388E3C",
+            activebackground="#1D4ED8",
             activeforeground="white",
-            font=("Arial", 12, "bold"),
-            width=22,
-            height=2,
+            font=("Segoe UI",12,"bold"),
+            relief="flat",
             cursor="hand2",
+            width=20,
+            height=2,
             command=self.save_income
-        ).grid(
+        )
+
+        self.save_button.grid(
             row=6,
             column=0,
             columnspan=2,
-            pady=30
+            pady=(30,25)
         )
+
+        # ==========================================
+        # Responsive Layout
+        # ==========================================
+
+        self.card.columnconfigure(0, weight=1)
+        self.card.columnconfigure(1, weight=3)
+
+        self.amount_entry.focus()
 
     # ==========================================
     # Save Income

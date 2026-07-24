@@ -34,81 +34,144 @@ class ExpenseWindow:
     # ==========================================
     # Create Widgets
     # ==========================================
-
     def create_widgets(self):
 
-        main = ttk.Frame(
+        # ==========================================
+        # Root Background
+        # ==========================================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            padding=30
+            bg="#EEF2FF"
         )
 
-        main.pack(fill="both", expand=True)
+        container.pack(
+            fill="both",
+            expand=True
+        )
 
-        # ----------------------------------
-        # Title
-        # ----------------------------------
+        # ==========================================
+        # Header
+        # ==========================================
 
-        ttk.Label(
-            main,
+        header = tk.Frame(
+            container,
+            bg="#EF4444",
+            height=70
+        )
+
+        header.pack(fill="x")
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
             text="💸 Add Expense",
-            font=("Arial", 22, "bold")
+            font=("Segoe UI",24,"bold"),
+            bg="#EF4444",
+            fg="white"
+        ).pack(pady=18)
+
+        # ==========================================
+        # White Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            bd=0,
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            pady=30,
+            padx=40,
+            fill="both",
+            expand=True
+        )
+
+        # ==========================================
+        # Title
+        # ==========================================
+
+        tk.Label(
+            self.card,
+            text="Expense Details",
+            font=("Segoe UI",20,"bold"),
+            bg="white",
+            fg="#111827"
         ).grid(
             row=0,
             column=0,
             columnspan=2,
-            pady=(0, 30)
+            pady=(25,30)
         )
 
-        # ----------------------------------
+        # ==========================================
         # Date
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Date",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📅 Date",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=1,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.date_picker = DateEntry(
-            main,
-            width=37,
+            self.card,
+            width=30,
             date_pattern="dd-mm-yyyy",
-            font=("Arial", 10)
+            font=("Segoe UI",11)
         )
 
         self.date_picker.grid(
             row=1,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Category
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Category",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="🛒 Category",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=2,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.category_var = tk.StringVar()
 
         self.category_combo = ttk.Combobox(
-            main,
+            self.card,
             textvariable=self.category_var,
-            width=37,
-            state="readonly"
+            width=32,
+            state="readonly",
+            font=("Segoe UI",11)
         )
 
         self.category_combo["values"] = (
@@ -122,93 +185,112 @@ class ExpenseWindow:
             "Other"
         )
 
-        # Default Category
         self.category_combo.current(0)
 
         self.category_combo.grid(
             row=2,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-                # ----------------------------------
+        # ==========================================
         # Description
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Description",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📝 Description",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=3,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.description_var = tk.StringVar()
 
-        ttk.Entry(
-            main,
+        self.description_entry = ttk.Entry(
+            self.card,
             textvariable=self.description_var,
-            width=40
-        ).grid(
-            row=3,
-            column=1,
-            padx=10
+            font=("Segoe UI",11),
+            width=35
         )
 
-        # ----------------------------------
-        # Amount
-        # ----------------------------------
+        self.description_entry.grid(
+            row=3,
+            column=1,
+            padx=40,
+            pady=12,
+            sticky="ew"
+        )
 
-        ttk.Label(
-            main,
-            text="Amount (₹)",
-            font=("Arial", 11)
+        # ==========================================
+        # Amount
+        # ==========================================
+
+        tk.Label(
+            self.card,
+            text="💰 Amount (₹)",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=4,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.amount_var = tk.StringVar()
 
         self.amount_entry = ttk.Entry(
-            main,
+            self.card,
             textvariable=self.amount_var,
-            width=40
+            font=("Segoe UI",11),
+            width=35
         )
 
         self.amount_entry.grid(
             row=4,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Payment Mode
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Payment Mode",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="💳 Payment Mode",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=5,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.payment_var = tk.StringVar()
 
         self.payment_combo = ttk.Combobox(
-            main,
+            self.card,
             textvariable=self.payment_var,
-            width=37,
-            state="readonly"
+            width=32,
+            state="readonly",
+            font=("Segoe UI",11)
         )
 
         self.payment_combo["values"] = (
@@ -219,67 +301,87 @@ class ExpenseWindow:
             "Net Banking"
         )
 
-        # Default Payment Mode
         self.payment_combo.current(0)
 
         self.payment_combo.grid(
             row=5,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
+        # ==========================================
         # Notes
-        # ----------------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Notes",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📝 Notes",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=6,
             column=0,
             sticky="nw",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.notes = tk.Text(
-            main,
-            width=40,
+            self.card,
+            width=35,
             height=6,
-            font=("Arial", 10)
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1,
+            wrap="word"
         )
 
         self.notes.grid(
             row=6,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        # ----------------------------------
-        # Save Button
-        # ----------------------------------
+        # ==========================================
+        # Save Expense Button
+        # ==========================================
 
-        tk.Button(
-            main,
+        self.save_button = tk.Button(
+            self.card,
             text="💾 Save Expense",
-            bg="#F44336",
+            bg="#EF4444",
             fg="white",
-            activebackground="#D32F2F",
+            activebackground="#DC2626",
             activeforeground="white",
-            font=("Arial", 12, "bold"),
-            width=22,
-            height=2,
+            font=("Segoe UI",12,"bold"),
+            relief="flat",
             cursor="hand2",
+            width=20,
+            height=2,
             command=self.save_expense_data
-        ).grid(
+        )
+
+        self.save_button.grid(
             row=7,
             column=0,
             columnspan=2,
-            pady=30
+            pady=(30,25)
         )
 
-            # ==========================================
+        # ==========================================
+        # Responsive Layout
+        # ==========================================
+
+        self.card.columnconfigure(0, weight=1)
+        self.card.columnconfigure(1, weight=3)
+
+        self.amount_entry.focus()
+     # ==========================================
     # Save Expense
     # ==========================================
 

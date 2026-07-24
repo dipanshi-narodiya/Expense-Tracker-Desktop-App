@@ -31,50 +31,109 @@ class BudgetWindow:
 
     def create_widgets(self):
 
-        main = ttk.Frame(
+        # ==========================================
+        # Root Background
+        # ==========================================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            padding=30
+            bg="#EEF2FF"
         )
 
-        main.pack(fill="both", expand=True)
+        container.pack(
+            fill="both",
+            expand=True
+        )
 
-        # --------------------------
+        # ==========================================
+        # Header
+        # ==========================================
+
+        header = tk.Frame(
+            container,
+            bg="#F59E0B",
+            height=70
+        )
+
+        header.pack(fill="x")
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="🎯 Monthly Budget",
+            font=("Segoe UI",24,"bold"),
+            bg="#F59E0B",
+            fg="white"
+        ).pack(pady=18)
+
+        # ==========================================
+        # White Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            bd=0,
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            pady=30,
+            padx=40,
+            fill="both",
+            expand=True
+        )
+
+        # ==========================================
         # Title
-        # --------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="💰 Set Monthly Budget",
-            font=("Arial", 22, "bold")
+        tk.Label(
+            self.card,
+            text="Budget Details",
+            font=("Segoe UI",20,"bold"),
+            bg="white",
+            fg="#111827"
         ).grid(
             row=0,
             column=0,
             columnspan=2,
-            pady=(0, 30)
+            pady=(25,30)
         )
 
-        # --------------------------
+            # ==========================================
         # Month
-        # --------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Month",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📅 Month",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=1,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.month_var = tk.StringVar()
 
         self.month_combo = ttk.Combobox(
-            main,
+            self.card,
             textvariable=self.month_var,
-            width=35,
-            state="readonly"
+            width=32,
+            state="readonly",
+            font=("Segoe UI",11)
         )
 
         self.month_combo["values"] = (
@@ -92,91 +151,122 @@ class BudgetWindow:
             "December"
         )
 
+        self.month_combo.set(datetime.now().strftime("%B"))
+
         self.month_combo.grid(
             row=1,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
-        self.month_combo.set(datetime.now().strftime("%B"))
-
-        # --------------------------
+        # ==========================================
         # Year
-        # --------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Year",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="📆 Year",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=2,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.year_var = tk.StringVar()
 
-        ttk.Entry(
-            main,
+        self.year_entry = ttk.Entry(
+            self.card,
             textvariable=self.year_var,
-            width=38
-        ).grid(
+            font=("Segoe UI",11),
+            width=35
+        )
+
+        self.year_entry.grid(
             row=2,
             column=1,
-            padx=10
+            padx=40,
+            pady=12,
+            sticky="ew"
         )
 
         self.year_var.set(str(datetime.now().year))
 
-        # --------------------------
+        # ==========================================
         # Budget Amount
-        # --------------------------
+        # ==========================================
 
-        ttk.Label(
-            main,
-            text="Budget (₹)",
-            font=("Arial", 11)
+        tk.Label(
+            self.card,
+            text="💰 Budget Amount (₹)",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
         ).grid(
             row=3,
             column=0,
             sticky="w",
-            pady=10
+            padx=40,
+            pady=12
         )
 
         self.amount_var = tk.StringVar()
 
-        ttk.Entry(
-            main,
+        self.amount_entry = ttk.Entry(
+            self.card,
             textvariable=self.amount_var,
-            width=38
-        ).grid(
-            row=3,
-            column=1,
-            padx=10
+            font=("Segoe UI",11),
+            width=35
         )
 
-        # --------------------------
-        # Save Button
-        # --------------------------
+        self.amount_entry.grid(
+            row=3,
+            column=1,
+            padx=40,
+            pady=12,
+            sticky="ew"
+        )
 
-        tk.Button(
-            main,
+        # ==========================================
+        # Save Budget Button
+        # ==========================================
+
+        self.save_button = tk.Button(
+            self.card,
             text="💾 Save Budget",
-            bg="#4CAF50",
+            bg="#F59E0B",
             fg="white",
-            font=("Arial", 12, "bold"),
+            activebackground="#D97706",
+            activeforeground="white",
+            font=("Segoe UI",12,"bold"),
+            relief="flat",
+            cursor="hand2",
             width=20,
             height=2,
-            cursor="hand2",
             command=self.save_budget_data
-        ).grid(
+        )
+
+        self.save_button.grid(
             row=4,
             column=0,
             columnspan=2,
-            pady=30
+            pady=(30,25)
         )
-    
+
+        # ==========================================
+        # Responsive Layout
+        # ==========================================
+
+        self.card.columnconfigure(0, weight=1)
+        self.card.columnconfigure(1, weight=3)
+
+        self.amount_entry.focus()
     # ==========================================
     # Save Budget
     # ==========================================

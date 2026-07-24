@@ -25,7 +25,7 @@ class DashboardWindow:
         self.root = tk.Tk()
 
         self.root.title("Expense Tracker - Dashboard")
-
+        self.root.configure(bg="#EEF2FF")
         # self.root.geometry("zoomed")
         self.root.state("zoomed")
 
@@ -41,361 +41,602 @@ class DashboardWindow:
 
     def create_widgets(self):
 
-        self.main_frame = ttk.Frame(
+        # ===============================
+        # Root Background
+        # ===============================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ===============================
+        # Header
+        # ===============================
+
+        header = tk.Frame(
             self.root,
-            padding=20
+            bg="#2563EB",
+            height=90
         )
 
-        self.main_frame.pack(
+        header.pack(fill="x")
+        header.pack_propagate(False)
+
+        # -------------------------------
+        # Left Side
+        # -------------------------------
+
+        left_header = tk.Frame(
+            header,
+            bg="#2563EB"
+        )
+
+        left_header.pack(
+            side="left",
+            padx=30,
+            pady=10
+        )
+
+        tk.Label(
+            left_header,
+            text="💰 Expense Tracker",
+            font=("Segoe UI",30,"bold"),
+            fg="white",
+            bg="#2563EB"
+        ).pack(anchor="w")
+
+        tk.Label(
+            left_header,
+            text="Manage your personal finances with ease",
+            font=("Segoe UI",11),
+            fg="white",
+            bg="#2563EB"
+        ).pack(anchor="w")
+
+        # -------------------------------
+        # Right Side
+        # -------------------------------
+
+        right_header = tk.Frame(
+            header,
+            bg="#2563EB"
+        )
+
+        right_header.pack(
+            side="right",
+            padx=30,
+            pady=10
+        )
+
+        self.clock_label = tk.Label(
+            right_header,
+            text="",
+            font=("Segoe UI",11),
+            fg="white",
+            bg="#2563EB"
+        )
+
+        self.clock_label.pack(anchor="e")
+
+        tk.Label(
+            right_header,
+            text=f"👤 Welcome, {self.user[1]}",
+            font=("Segoe UI",13,"bold"),
+            fg="white",
+            bg="#2563EB"
+        ).pack(anchor="e", pady=3)
+
+        tk.Button(
+            right_header,
+            text="Logout",
+            bg="#EF4444",
+            fg="white",
+            activebackground="#DC2626",
+            activeforeground="white",
+            relief="flat",
+            cursor="hand2",
+            font=("Segoe UI",10,"bold"),
+            padx=20,
+            command=self.logout
+        ).pack(anchor="e", pady=5)
+
+        # ===============================
+        # Main Container
+        # ===============================
+
+        self.main_container = tk.Frame(
+            self.root,
+            bg="#EEF2FF"
+        )
+
+        self.main_container.pack(
+            fill="both",
+            expand=True,
+            padx=25,
+            pady=20
+        )
+
+        # ===============================
+        # Summary Cards Frame
+        # ===============================
+
+        self.cards_frame = tk.Frame(
+            self.main_container,
+            bg="#EEF2FF"
+        )
+
+        self.cards_frame.pack(
+            fill="x",
+            pady=(0,20)
+        )
+
+        # ==========================================
+        # CARD 1 - BALANCE
+        # ==========================================
+
+        self.balance_card = tk.Frame(
+            self.cards_frame,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
+        )
+
+        self.balance_card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=8
+        )
+
+        tk.Label(
+            self.balance_card,
+            text="💚 Balance",
+            font=("Segoe UI",14,"bold"),
+            fg="#16A34A",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(18,5))
+
+        self.balance_label = tk.Label(
+            self.balance_card,
+            text="₹ 0.00",
+            font=("Segoe UI",28,"bold"),
+            fg="#111827",
+            bg="white"
+        )
+
+        self.balance_label.pack(anchor="w", padx=20)
+
+        tk.Label(
+            self.balance_card,
+            text="Current Balance",
+            font=("Segoe UI",10),
+            fg="#6B7280",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(0,18))
+
+
+        # ==========================================
+        # CARD 2 - INCOME
+        # ==========================================
+
+        self.income_card = tk.Frame(
+            self.cards_frame,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
+        )
+
+        self.income_card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=8
+        )
+
+        tk.Label(
+            self.income_card,
+            text="💵 Income",
+            font=("Segoe UI",14,"bold"),
+            fg="#2563EB",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(18,5))
+
+        self.income_label = tk.Label(
+            self.income_card,
+            text="₹ 0.00",
+            font=("Segoe UI",28,"bold"),
+            fg="#111827",
+            bg="white"
+        )
+
+        self.income_label.pack(anchor="w", padx=20)
+
+        tk.Label(
+            self.income_card,
+            text="Total Income",
+            font=("Segoe UI",10),
+            fg="#6B7280",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(0,18))
+
+
+        # ==========================================
+        # CARD 3 - EXPENSE
+        # ==========================================
+
+        self.expense_card = tk.Frame(
+            self.cards_frame,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
+        )
+
+        self.expense_card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=8
+        )
+
+        tk.Label(
+            self.expense_card,
+            text="💸 Expense",
+            font=("Segoe UI",14,"bold"),
+            fg="#EF4444",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(18,5))
+
+        self.expense_label = tk.Label(
+            self.expense_card,
+            text="₹ 0.00",
+            font=("Segoe UI",28,"bold"),
+            fg="#111827",
+            bg="white"
+        )
+
+        self.expense_label.pack(anchor="w", padx=20)
+
+        tk.Label(
+            self.expense_card,
+            text="Total Expense",
+            font=("Segoe UI",10),
+            fg="#6B7280",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(0,18))
+
+
+        # ==========================================
+        # CARD 4 - BUDGET
+        # ==========================================
+
+        self.budget_card = tk.Frame(
+            self.cards_frame,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
+        )
+
+        self.budget_card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=8
+        )
+
+        tk.Label(
+            self.budget_card,
+            text="🎯 Budget",
+            font=("Segoe UI",14,"bold"),
+            fg="#F59E0B",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(18,5))
+
+        self.budget_label = tk.Label(
+            self.budget_card,
+            text="₹ 0.00",
+            font=("Segoe UI",28,"bold"),
+            fg="#111827",
+            bg="white"
+        )
+
+        self.budget_label.pack(anchor="w", padx=20)
+
+        tk.Label(
+            self.budget_card,
+            text="Monthly Budget",
+            font=("Segoe UI",10),
+            fg="#6B7280",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(0,18))
+
+
+        # ==========================================
+        # CARD 5 - REMAINING
+        # ==========================================
+
+        self.remaining_card = tk.Frame(
+            self.cards_frame,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
+        )
+
+        self.remaining_card.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=8
+        )
+
+        tk.Label(
+            self.remaining_card,
+            text="🟣 Remaining",
+            font=("Segoe UI",14,"bold"),
+            fg="#8B5CF6",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(18,5))
+
+        self.remaining_label = tk.Label(
+            self.remaining_card,
+            text="₹ 0.00",
+            font=("Segoe UI",28,"bold"),
+            fg="#111827",
+            bg="white"
+        )
+
+        self.remaining_label.pack(anchor="w", padx=20)
+
+        tk.Label(
+            self.remaining_card,
+            text="Budget Left",
+            font=("Segoe UI",10),
+            fg="#6B7280",
+            bg="white"
+        ).pack(anchor="w", padx=20, pady=(0,18))
+
+        # ==========================================
+        # Quick Actions
+        # ==========================================
+
+        self.button_frame = tk.Frame(
+            self.main_container,
+            bg="#EEF2FF"
+        )
+
+        self.button_frame.pack(
+            fill="x",
+            pady=(10,20)
+        )
+
+        # Row 1
+        row1 = tk.Frame(
+            self.button_frame,
+            bg="#EEF2FF"
+        )
+
+        row1.pack()
+
+        # Income Button
+
+        tk.Button(
+            row1,
+            text="➕  Income",
+            bg="#22C55E",
+            fg="white",
+            activebackground="#16A34A",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_income
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # Expense
+
+        tk.Button(
+            row1,
+            text="➖  Expense",
+            bg="#EF4444",
+            fg="white",
+            activebackground="#DC2626",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_expense
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # Reports
+
+        tk.Button(
+            row1,
+            text="📄 Reports",
+            bg="#2563EB",
+            fg="white",
+            activebackground="#1D4ED8",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_reports
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # Analytics
+
+        tk.Button(
+            row1,
+            text="📊 Analytics",
+            bg="#8B5CF6",
+            fg="white",
+            activebackground="#7C3AED",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_analytics
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # Budget
+
+        tk.Button(
+            row1,
+            text="🎯 Budget",
+            bg="#F59E0B",
+            fg="white",
+            activebackground="#D97706",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_budget
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # Row 2
+
+        row2 = tk.Frame(
+            self.button_frame,
+            bg="#EEF2FF"
+        )
+
+        row2.pack()
+
+        tk.Button(
+            row2,
+            text="⚙ Settings",
+            bg="#64748B",
+            fg="white",
+            activebackground="#475569",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.open_settings
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        tk.Button(
+            row2,
+            text="🚪 Logout",
+            bg="#374151",
+            fg="white",
+            activebackground="#1F2937",
+            activeforeground="white",
+            relief="flat",
+            font=("Segoe UI",11,"bold"),
+            cursor="hand2",
+            width=16,
+            height=2,
+            command=self.logout
+        ).pack(
+            side="left",
+            padx=8,
+            pady=8
+        )
+
+        # ==========================================
+        # Recent Transactions Section
+        # ==========================================
+
+        transaction_container = tk.Frame(
+            self.main_container,
+            bg="#EEF2FF"
+        )
+
+        transaction_container.pack(
             fill="both",
             expand=True
         )
 
-        # ------------------------------
+        # --------------------------
         # Title
-        # ------------------------------
-
-        title = ttk.Label(
-            self.main_frame,
-            text="💰 Expense Tracker",
-            font=("Arial", 24, "bold")
-        )
-
-        title.pack(pady=(5, 10))
-
-        # ------------------------------
-        # Header
-        # ------------------------------
-
-        header = ttk.Frame(self.main_frame)
-
-        header.pack(fill="x", pady=(0, 20))
-
-        ttk.Label(
-            header,
-            text=f"👋 Welcome, {self.user[1]}",
-            font=("Arial", 18, "bold")
-        ).pack(side="left")
-
-        self.clock_label = ttk.Label(
-            header,
-            font=("Arial", 12)
-        )
-
-        self.clock_label.pack(side="right")
-
-        self.update_clock()
-
-        # ==========================================
-        # Summary Cards
-        # ==========================================
-
-        self.summary_frame = ttk.Frame(self.main_frame)
-        self.summary_frame.pack(pady=20)
-
-        # ------------------------------
-        # Balance Card
-        # ------------------------------
-
-        balance_frame = tk.Frame(
-            self.summary_frame,
-            bg="#4CAF50",
-            padx=20,
-            pady=18,
-            relief="ridge",
-            bd=2
-        )
-
-        balance_frame.grid(row=0, column=0, padx=8)
+        # --------------------------
 
         tk.Label(
-            balance_frame,
-            text="💰 Total Balance",
-            bg="#4CAF50",
-            fg="white",
-            font=("Arial", 15, "bold")
-        ).pack()
-
-        self.balance_label = tk.Label(
-            balance_frame,
-            text="₹ 0.00",
-            bg="#4CAF50",
-            fg="white",
-            font=("Arial", 22, "bold")
-        )
-
-        self.balance_label.pack(pady=(12, 0))
-
-        # ------------------------------
-        # Income Card
-        # ------------------------------
-
-        income_frame = tk.Frame(
-            self.summary_frame,
-            bg="#2196F3",
-            padx=20,
-            pady=18,
-            relief="ridge",
-            bd=2
-        )
-
-        income_frame.grid(row=0, column=1, padx=15)
-
-        tk.Label(
-            income_frame,
-            text="📈 Total Income",
-            bg="#2196F3",
-            fg="white",
-            font=("Arial", 15, "bold")
-        ).pack()
-
-        self.income_label = tk.Label(
-            income_frame,
-            text="₹ 0.00",
-            bg="#2196F3",
-            fg="white",
-            font=("Arial", 22, "bold")
-        )
-
-        self.income_label.pack(pady=(12, 0))
-
-        # ------------------------------
-        # Expense Card
-        # ------------------------------
-
-        expense_frame = tk.Frame(
-            self.summary_frame,
-            bg="#F44336",
-            padx=20,
-            pady=18,
-            relief="ridge",
-            bd=2
-        )
-
-        expense_frame.grid(row=0, column=2, padx=8)
-
-        tk.Label(
-            expense_frame,
-            text="📉 Total Expense",
-            bg="#F44336",
-            fg="white",
-            font=("Arial", 15, "bold")
-        ).pack()
-
-        self.expense_label = tk.Label(
-            expense_frame,
-            text="₹ 0.00",
-            bg="#F44336",
-            fg="white",
-            font=("Arial", 22, "bold")
-        )
-
-        self.expense_label.pack(pady=(12, 0))
-
-
-        # ==========================
-        # Budget Card
-        # ==========================
-
-        budget_frame = tk.Frame(
-            self.summary_frame,
-            bg="#FF9800",
-            padx=20,
-            pady=18,
-            relief="ridge",
-            bd=2
-        )
-
-        budget_frame.grid(row=0, column=3, padx=8)
-
-        tk.Label(
-            budget_frame,
-            text="💰 Monthly Budget",
-            bg="#FF9800",
-            fg="white",
-            font=("Arial",16,"bold")
-        ).pack()
-
-        self.budget_label = tk.Label(
-            budget_frame,
-            text="₹ 0.00",
-            bg="#FF9800",
-            fg="white",
-            font=("Arial",24,"bold")
-        )
-
-        self.budget_label.pack(pady=(15,0))
-
-
-        # ==========================
-        # Remaining Budget Card
-        # ==========================
-
-        remaining_frame = tk.Frame(
-            self.summary_frame,
-            bg="#009688",
-            padx=20,
-            pady=18,
-            relief="ridge",
-            bd=2
-        )
-
-        remaining_frame.grid(row=0, column=4, padx=8)
-
-        tk.Label(
-            remaining_frame,
-            text="🟢 Remaining Budget",
-            bg="#009688",
-            fg="white",
-            font=("Arial",16,"bold")
-        ).pack()
-
-        self.remaining_label = tk.Label(
-            remaining_frame,
-            text="₹ 0.00",
-            bg="#009688",
-            fg="white",
-            font=("Arial",24,"bold")
-        )
-
-        self.remaining_label.pack(pady=(15,0))
-
-        # ==========================================
-        # Action Buttons
-        # ==========================================
-
-        self.button_frame = ttk.Frame(self.main_frame)
-
-        self.button_frame.pack(pady=(20,30))
-
-        # ------------------------------
-        # Add Income
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="➕ Add Income",
-            bg="#4CAF50",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.open_income
-        ).grid(row=0, column=0, padx=10)
-
-        # ------------------------------
-        # Add Expense
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="💸 Add Expense",
-            bg="#F44336",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.open_expense
-        ).grid(row=0, column=1, padx=10)
-
-        # ------------------------------
-        # Reports
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="📊 Reports",
-            bg="#2196F3",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.open_reports
-        ).grid(row=0, column=2, padx=10)
-
-        # ------------------------------
-        # Analytics
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="📊 Analytics",
-            bg="#9C27B0",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.open_analytics
-        ).grid(row=0, column=3, padx=10)
-
-        # ------------------------------
-        # Budget
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="💰 Budget",
-            bg="#FF9800",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.open_budget
-        ).grid(row=0, column=4, padx=10)
-        
-        # ------------------------------
-        # Logout
-        # ------------------------------
-
-        tk.Button(
-            self.button_frame,
-            text="🚪 Logout",
-            bg="#555555",
-            fg="white",
-            font=("Arial", 11, "bold"),
-            width=14,
-            height=2,
-            cursor="hand2",
-            command=self.logout
-        ).grid(row=0, column=5, padx=10)
-
-        tk.Button(
-            self.button_frame,
-            text="⚙ Settings",
-            bg="#607D8B",
-            fg="white",
-            font=("Arial",11,"bold"),
-            width=14,
-            height=2,
-            command=self.open_settings
-        ).grid(row=1, column=2, padx=10, pady=10)
-
-        # ==========================================
-        # Recent Transactions
-        # ==========================================
-
-        recent_frame = ttk.LabelFrame(
-            self.main_frame,
+            transaction_container,
             text="📋 Recent Transactions",
-            padding=10
+            bg="#EEF2FF",
+            fg="#111827",
+            font=("Segoe UI",18,"bold")
+        ).pack(
+            anchor="w",
+            pady=(10,10)
         )
 
-        recent_frame.pack(
-            fill="x",
-            pady=(20, 0)
+        # --------------------------
+        # Table Frame
+        # --------------------------
+
+        table_frame = tk.Frame(
+            transaction_container,
+            bg="white",
+            bd=0,
+            highlightbackground="#E5E7EB",
+            highlightthickness=1
         )
 
-        # ------------------------------
-        # Transaction Table
-        # ------------------------------
+        table_frame.pack(
+            fill="both",
+            expand=True
+        )
+
+        # --------------------------
+        # Scrollbar
+        # --------------------------
+
+        scrollbar = ttk.Scrollbar(
+            table_frame,
+            orient="vertical"
+        )
+
+        scrollbar.pack(
+            side="right",
+            fill="y"
+        )
+
+        # --------------------------
+        # Treeview
+        # --------------------------
 
         self.transaction_table = ttk.Treeview(
-            recent_frame,
+            table_frame,
             columns=(
                 "Date",
                 "Type",
@@ -403,17 +644,37 @@ class DashboardWindow:
                 "Amount"
             ),
             show="headings",
-            height=6
+            yscrollcommand=scrollbar.set,
+            height=12
         )
 
-        self.transaction_table.heading("Date", text="Date")
-        self.transaction_table.heading("Type", text="Type")
-        self.transaction_table.heading("Category", text="Category / Source")
-        self.transaction_table.heading("Amount", text="Amount")
+        scrollbar.config(
+            command=self.transaction_table.yview
+        )
+
+        self.transaction_table.heading(
+            "Date",
+            text="Date"
+        )
+
+        self.transaction_table.heading(
+            "Type",
+            text="Type"
+        )
+
+        self.transaction_table.heading(
+            "Category",
+            text="Category"
+        )
+
+        self.transaction_table.heading(
+            "Amount",
+            text="Amount"
+        )
 
         self.transaction_table.column(
             "Date",
-            width=150,
+            width=140,
             anchor="center"
         )
 
@@ -425,40 +686,107 @@ class DashboardWindow:
 
         self.transaction_table.column(
             "Category",
-            width=450
+            width=220,
+            anchor="center"
         )
 
         self.transaction_table.column(
             "Amount",
-            width=180,
-            anchor="e"
-        )
-
-        scrollbar = ttk.Scrollbar(
-            recent_frame,
-            orient="vertical",
-            command=self.transaction_table.yview
-        )
-
-        self.transaction_table.configure(
-            yscrollcommand=scrollbar.set
+            width=150,
+            anchor="center"
         )
 
         self.transaction_table.pack(
-            side="left",
             fill="both",
-            expand=True
+            expand=True,
+            padx=10,
+            pady=10
         )
 
-        scrollbar.pack(
-            side="right",
-            fill="y"
-        )
+        # Load Existing Data
 
-        # Load transactions
-        self.load_recent_transactions()
-        
         self.load_summary()
+
+        self.load_recent_transactions()
+
+        # ==========================================
+        # Alternate Row Colors
+        # ==========================================
+
+        self.transaction_table.tag_configure(
+            "oddrow",
+            background="#FFFFFF"
+        )
+
+        self.transaction_table.tag_configure(
+            "evenrow",
+            background="#F8FAFC"
+        )
+
+        # ==========================================
+        # Hover Effect Function
+        # ==========================================
+
+        def on_enter(button, color):
+            button.config(bg=color)
+
+        def on_leave(button, color):
+            button.config(bg=color)
+
+        # ==========================================
+        # Apply Hover Effects
+        # ==========================================
+
+        buttons = []
+
+        for widget in self.button_frame.winfo_children():
+
+            if isinstance(widget, tk.Frame):
+
+                for btn in widget.winfo_children():
+
+                    if isinstance(btn, tk.Button):
+
+                        buttons.append(btn)
+
+        hover_colors = {
+            "#22C55E": "#16A34A",
+            "#EF4444": "#DC2626",
+            "#2563EB": "#1D4ED8",
+            "#8B5CF6": "#7C3AED",
+            "#F59E0B": "#D97706",
+            "#64748B": "#475569",
+            "#374151": "#1F2937"
+        }
+
+        for btn in buttons:
+
+            normal = btn.cget("bg")
+
+            hover = hover_colors.get(
+                normal,
+                normal
+            )
+
+            btn.bind(
+                "<Enter>",
+                lambda e, b=btn, c=hover: b.config(bg=c)
+            )
+
+            btn.bind(
+                "<Leave>",
+                lambda e, b=btn, c=normal: b.config(bg=c)
+            )
+
+        # ==========================================
+        # Initial Refresh
+        # ==========================================
+
+        self.load_summary()
+
+        self.load_recent_transactions()
+
+        self.update_clock()
     # ==========================================
     # Live Clock
     # ==========================================
@@ -513,14 +841,14 @@ class DashboardWindow:
         # Budget Warning
         # ==========================
 
-        if budget > 0:
+        # if budget > 0:
 
-            if remaining < 0:
+        #     if remaining < 0:
 
-                messagebox.showwarning(
-                    "Budget Exceeded",
-                    f"You have exceeded your monthly budget by ₹ {abs(remaining):,.2f}"
-                )    
+        #         messagebox.showwarning(
+        #             "Budget Exceeded",
+        #             f"You have exceeded your monthly budget by ₹ {abs(remaining):,.2f}"
+        #         )    
 
     # ==========================================
     # Load Recent Transactions

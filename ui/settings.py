@@ -22,56 +22,271 @@ class SettingsWindow:
 
     def create_widgets(self):
 
-        ttk.Label(
-            self.root,
-            text="⚙ Settings",
-            font=("Arial", 22, "bold")
-        ).pack(pady=20)
+        # ==========================================
+        # Root Background
+        # ==========================================
 
-        profile = ttk.LabelFrame(
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            text="Profile",
-            padding=20
+            bg="#EEF2FF"
         )
 
-        profile.pack(fill="x", padx=20)
+        container.pack(
+            fill="both",
+            expand=True
+        )
 
-        ttk.Label(
-            profile,
-            text=f"Name : {self.user[1]}",
-            font=("Arial",12)
-        ).pack(anchor="w", pady=5)
+        # ==========================================
+        # Header
+        # ==========================================
 
-        ttk.Label(
-            profile,
-            text=f"Username : {self.user[2]}",
-            font=("Arial",12)
-        ).pack(anchor="w", pady=5)
+        header = tk.Frame(
+            container,
+            bg="#2563EB",
+            height=70
+        )
 
-        ttk.Label(
-            profile,
-            text=f"Email : {self.user[3]}",
-            font=("Arial",12)
-        ).pack(anchor="w", pady=5)
+        header.pack(fill="x")
 
-        ttk.Button(
-            self.root,
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="⚙ Settings",
+            font=("Segoe UI",24,"bold"),
+            bg="#2563EB",
+            fg="white"
+        ).pack(
+            pady=18
+        )
+
+        # ==========================================
+        # White Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            bd=0,
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            fill="both",
+            expand=True,
+            padx=40,
+            pady=30
+        )
+
+        # ==========================================
+        # Title
+        # ==========================================
+
+        tk.Label(
+            self.card,
+            text="User Profile",
+            font=("Segoe UI",20,"bold"),
+            bg="white",
+            fg="#111827"
+        ).pack(
+            pady=(20,25)
+        )
+
+        # ==========================================
+        # Profile Information
+        # ==========================================
+
+        profile_frame = tk.LabelFrame(
+            self.card,
+            text=" 👤 Profile Information ",
+            bg="white",
+            fg="#111827",
+            font=("Segoe UI",12,"bold"),
+            padx=20,
+            pady=20
+        )
+
+        profile_frame.pack(
+            fill="x",
+            padx=30,
+            pady=(0,30)
+        )
+
+        # Name
+
+        tk.Label(
+            profile_frame,
+            text="👤 Name",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
+        ).grid(
+            row=0,
+            column=0,
+            sticky="w",
+            pady=8
+        )
+
+        tk.Label(
+            profile_frame,
+            text=self.user[1],
+            font=("Segoe UI",11),
+            bg="white",
+            fg="#111827"
+        ).grid(
+            row=0,
+            column=1,
+            sticky="w",
+            padx=30
+        )
+
+        # Username
+
+        tk.Label(
+            profile_frame,
+            text="🆔 Username",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
+        ).grid(
+            row=1,
+            column=0,
+            sticky="w",
+            pady=8
+        )
+
+        tk.Label(
+            profile_frame,
+            text=self.user[2],
+            font=("Segoe UI",11),
+            bg="white",
+            fg="#111827"
+        ).grid(
+            row=1,
+            column=1,
+            sticky="w",
+            padx=30
+        )
+
+        # Email
+
+        tk.Label(
+            profile_frame,
+            text="📧 Email",
+            font=("Segoe UI",11,"bold"),
+            bg="white",
+            fg="#374151"
+        ).grid(
+            row=2,
+            column=0,
+            sticky="w",
+            pady=8
+        )
+
+        tk.Label(
+            profile_frame,
+            text=self.user[3],
+            font=("Segoe UI",11),
+            bg="white",
+            fg="#111827"
+        ).grid(
+            row=2,
+            column=1,
+            sticky="w",
+            padx=30
+        )
+
+        # ==========================================
+        # Action Buttons
+        # ==========================================
+
+        button_frame = tk.Frame(
+            self.card,
+            bg="white"
+        )
+
+        button_frame.pack(
+            pady=(10,25)
+        )
+
+        # ------------------------------------------
+        # Edit Profile
+        # ------------------------------------------
+
+        tk.Button(
+            button_frame,
             text="✏ Edit Profile",
+            bg="#2563EB",
+            fg="white",
+            activebackground="#1D4ED8",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
+            width=22,
+            height=2,
             command=self.edit_profile
-        ).pack(pady=15)
+        ).grid(
+            row=0,
+            column=0,
+            padx=10,
+            pady=8
+        )
 
-        ttk.Button(
-            self.root,
+        # ------------------------------------------
+        # Change Password
+        # ------------------------------------------
+
+        tk.Button(
+            button_frame,
             text="🔒 Change Password",
+            bg="#F59E0B",
+            fg="white",
+            activebackground="#D97706",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
+            width=22,
+            height=2,
             command=self.change_password
-        ).pack(pady=10)
+        ).grid(
+            row=0,
+            column=1,
+            padx=10,
+            pady=8
+        )
 
-        ttk.Button(
-            self.root,
+        # ------------------------------------------
+        # About Application
+        # ------------------------------------------
+
+        tk.Button(
+            button_frame,
             text="ℹ About Application",
+            bg="#9333EA",
+            fg="white",
+            activebackground="#7E22CE",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
+            width=22,
+            height=2,
             command=self.open_about
-        ).pack(pady=10)
-
+        ).grid(
+            row=1,
+            column=0,
+            columnspan=2,
+            pady=15
+        )
     def edit_profile(self):
 
         window = tk.Toplevel(self.root)

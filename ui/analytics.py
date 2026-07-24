@@ -37,162 +37,287 @@ class AnalyticsWindow:
 
     def create_widgets(self):
 
-        title = tk.Label(
+        # ==========================================
+        # Root Background
+        # ==========================================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            text="📊 Expense Tracker Analytics",
-            font=("Arial", 24, "bold")
+            bg="#EEF2FF"
         )
 
-        title.pack(pady=15)
+        container.pack(
+            fill="both",
+            expand=True
+        )
 
-        # -----------------------------
+        # ==========================================
+        # Header
+        # ==========================================
+
+        header = tk.Frame(
+            container,
+            bg="#2563EB",
+            height=70
+        )
+
+        header.pack(fill="x")
+
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="📊 Analytics Dashboard",
+            font=("Segoe UI",24,"bold"),
+            bg="#2563EB",
+            fg="white"
+        ).pack(
+            pady=18
+        )
+
+        # ==========================================
+        # Main White Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            bd=0,
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=20
+        )
+
+        tk.Label(
+            self.card,
+            text="Financial Analytics",
+            font=("Segoe UI",20,"bold"),
+            bg="white",
+            fg="#111827"
+        ).pack(
+            pady=(20,25)
+        )
+
+        # ==========================================
         # Summary Cards
-        # -----------------------------
+        # ==========================================
 
-        summary_frame = tk.Frame(self.root)
+        summary_frame = tk.Frame(
+            self.card,
+            bg="white"
+        )
 
-        summary_frame.pack(fill="x", padx=20)
+        summary_frame.pack(
+            fill="x",
+            padx=20,
+            pady=(0,20)
+        )
 
         cards = [
 
-            ("💰 Income", get_total_income(self.user[0])),
+            ("💰 Income", get_total_income(self.user[0]), "#22C55E"),
 
-            ("💸 Expense", get_total_expense(self.user[0])),
+            ("💸 Expense", get_total_expense(self.user[0]), "#EF4444"),
 
-            ("💵 Balance", get_balance(self.user[0])),
+            ("💵 Balance", get_balance(self.user[0]), "#2563EB"),
 
-            ("🎯 Budget", get_budget(self.user[0]))
+            ("🎯 Budget", get_budget(self.user[0]), "#F59E0B")
 
         ]
 
-        for title, value in cards:
+        for title, value, color in cards:
 
             card = tk.Frame(
-
                 summary_frame,
-
-                bg="#F5F5F5",
-
-                relief="ridge",
-
-                bd=2
-
+                bg="white",
+                bd=1,
+                relief="solid",
+                highlightbackground="#D1D5DB",
+                highlightthickness=1
             )
 
             card.pack(
-
                 side="left",
-
                 expand=True,
+                fill="both",
+                padx=8
+            )
 
-                fill="x",
+            # Colored Top Bar
 
-                padx=8,
+            tk.Frame(
+                card,
+                bg=color,
+                height=6
+            ).pack(fill="x")
 
-                pady=5
-
+            tk.Label(
+                card,
+                text=title,
+                font=("Segoe UI",11,"bold"),
+                bg="white",
+                fg="#374151"
+            ).pack(
+                pady=(15,5)
             )
 
             tk.Label(
-
                 card,
-
-                text=title,
-
-                bg="#F5F5F5",
-
-                font=("Arial",12,"bold")
-
-            ).pack(pady=(10,5))
-
-            tk.Label(
-
-                card,
-
                 text=f"₹ {value:,.2f}",
+                font=("Segoe UI",18,"bold"),
+                bg="white",
+                fg=color
+            ).pack(
+                pady=(0,18)
+            )
 
-                bg="#F5F5F5",
+        # ==========================================
+        # Action Buttons
+        # ==========================================
 
-                fg="#2E7D32",
+        button_frame = tk.Frame(
+            self.card,
+            bg="white"
+        )
 
-                font=("Arial",18,"bold")
+        button_frame.pack(
+            pady=(10,25)
+        )
 
-            ).pack(pady=(0,10))
-
-        # -----------------------------
-        # Buttons
-        # -----------------------------
-
-        button_frame = tk.Frame(self.root)
-
-        button_frame.pack(pady=15)
+        # Refresh Button
 
         tk.Button(
-
             button_frame,
-
             text="🔄 Refresh",
-
-            bg="#2196F3",
-
+            bg="#2563EB",
             fg="white",
-
-            width=18,
-
-            font=("Arial",11,"bold"),
-
+            activebackground="#1D4ED8",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
+            width=16,
             command=self.refresh_dashboard
+        ).grid(
+            row=0,
+            column=0,
+            padx=10
+        )
 
-        ).pack(side="left", padx=10)
+        # Export Button
 
         tk.Button(
-
             button_frame,
-
             text="📷 Export",
-
-            bg="#4CAF50",
-
+            bg="#22C55E",
             fg="white",
-
-            width=18,
-
-            font=("Arial",11,"bold"),
-
+            activebackground="#16A34A",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
+            width=16,
             command=self.export_chart
+        ).grid(
+            row=0,
+            column=1,
+            padx=10
+        )
 
-        ).pack(side="left", padx=10)
+        # Top Categories Button
 
         tk.Button(
             button_frame,
             text="🏆 Top Categories",
-            bg="#9C27B0",
+            bg="#9333EA",
             fg="white",
+            activebackground="#7E22CE",
+            activeforeground="white",
+            font=("Segoe UI",11,"bold"),
+            relief="flat",
+            cursor="hand2",
             width=18,
-            font=("Arial",11,"bold"),
             command=self.show_top_categories
-        ).pack(side="left", padx=10)
-        # -----------------------------
-        # Charts Frame
-        # -----------------------------
-
-        self.charts_frame = tk.Frame(self.root)
-
-        self.charts_frame.pack(
-
-            fill="both",
-
-            expand=True,
-
-            pady=15
-
+        ).grid(
+            row=0,
+            column=2,
+            padx=10
         )
 
-        top_frame = tk.Frame(self.charts_frame)
-        top_frame.pack()
+        # ==========================================
+        # Charts Section
+        # ==========================================
 
-        bottom_frame = tk.Frame(self.charts_frame)
-        bottom_frame.pack()
+        charts_container = tk.LabelFrame(
+            self.card,
+            text=" 📈 Charts & Insights ",
+            bg="white",
+            fg="#111827",
+            font=("Segoe UI",12,"bold"),
+            padx=15,
+            pady=15
+        )
+
+        charts_container.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=(0,20)
+        )
+
+        self.charts_frame = tk.Frame(
+            charts_container,
+            bg="white"
+        )
+
+        self.charts_frame.pack(
+            fill="both",
+            expand=True
+        )
+
+        # -----------------------------
+        # Top Charts
+        # -----------------------------
+
+        top_frame = tk.Frame(
+            self.charts_frame,
+            bg="white"
+        )
+
+        top_frame.pack(
+            fill="x",
+            pady=10
+        )
+
+        # -----------------------------
+        # Bottom Charts
+        # -----------------------------
+
+        bottom_frame = tk.Frame(
+            self.charts_frame,
+            bg="white"
+        )
+
+        bottom_frame.pack(
+            fill="x",
+            pady=10
+        )
+
+        # ==========================================
+        # Load Charts
+        # ==========================================
 
         self.show_pie_chart(top_frame)
 
