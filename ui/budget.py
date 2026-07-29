@@ -19,7 +19,7 @@ class BudgetWindow:
 
         self.root.title("Set Monthly Budget")
 
-        self.root.geometry("500x450")
+        self.root.geometry("900x850")
 
         self.root.resizable(False, False)
 

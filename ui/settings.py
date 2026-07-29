@@ -14,7 +14,7 @@ class SettingsWindow:
 
         self.root.title("Settings")
 
-        self.root.geometry("700x550")
+        self.root.geometry("900x850")
 
         self.root.resizable(False, False)
 

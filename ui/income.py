@@ -20,7 +20,7 @@ class IncomeWindow:
 
         self.root.title("Expense Tracker - Add Income")
 
-        self.root.geometry("650x550")
+        self.root.geometry("1000x820")
 
         self.root.resizable(False, False)
 
@@ -54,7 +54,9 @@ class IncomeWindow:
 
         container.pack(
             fill="both",
-            expand=True
+            expand=True,
+            padx=20,
+            pady=20
         )
 
         # ==========================================
@@ -96,7 +98,7 @@ class IncomeWindow:
         )
 
         self.card.pack(
-            pady=30,
+            pady=20,
             padx=40,
             fill="both",
             expand=True
@@ -116,7 +118,7 @@ class IncomeWindow:
             row=0,
             column=0,
             columnspan=2,
-            pady=(25,30)
+            pady=(15,30)
         )
 
         # ==========================================
@@ -133,8 +135,8 @@ class IncomeWindow:
             row=1,
             column=0,
             sticky="w",
-            padx=40,
-            pady=12
+            padx=(30,15),
+            pady=10
         )
 
         self.date_picker = DateEntry(
@@ -167,7 +169,7 @@ class IncomeWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.source_var = tk.StringVar()
@@ -215,7 +217,7 @@ class IncomeWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.amount_var = tk.StringVar()
@@ -250,7 +252,7 @@ class IncomeWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.payment_var = tk.StringVar()
@@ -296,7 +298,7 @@ class IncomeWindow:
             column=0,
             sticky="nw",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.notes = tk.Text(
@@ -348,7 +350,7 @@ class IncomeWindow:
         # ==========================================
 
         self.card.columnconfigure(0, weight=1)
-        self.card.columnconfigure(1, weight=3)
+        self.card.columnconfigure(1, weight=1)
 
         self.amount_entry.focus()
 

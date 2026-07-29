@@ -266,17 +266,19 @@ class AnalyticsWindow:
             bg="white",
             fg="#111827",
             font=("Segoe UI",12,"bold"),
-            padx=15,
-            pady=15
+            padx=10,
+            pady=10,
+            height=520
         )
 
         charts_container.pack(
             fill="both",
             expand=True,
             padx=20,
-            pady=(0,20)
+            pady=(5,20)
         )
 
+        charts_container.pack_propagate(False)
         self.charts_frame = tk.Frame(
             charts_container,
             bg="white"
@@ -297,8 +299,9 @@ class AnalyticsWindow:
         )
 
         top_frame.pack(
-            fill="x",
-            pady=10
+            fill="both",
+            expand=True,
+            pady=5
         )
 
         # -----------------------------
@@ -311,19 +314,53 @@ class AnalyticsWindow:
         )
 
         bottom_frame.pack(
-            fill="x",
-            pady=10
+            fill="both",
+            expand=True,
+            pady=5
         )
 
         # ==========================================
         # Load Charts
         # ==========================================
 
-        self.show_pie_chart(top_frame)
+        left_chart = tk.Frame(
+            top_frame,
+            bg="white"
+        )
 
-        self.show_bar_chart(top_frame)
+        left_chart.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=10
+        )
 
-        self.show_savings_chart(bottom_frame)
+        right_chart = tk.Frame(
+            top_frame,
+            bg="white"
+        )
+
+        right_chart.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=10
+        )
+
+        self.show_pie_chart(left_chart)
+        self.show_bar_chart(right_chart)
+
+        savings_frame = tk.Frame(
+            bottom_frame,
+            bg="white"
+        )
+
+        savings_frame.pack(
+            fill="both",
+            expand=True
+        )
+
+        self.show_savings_chart(savings_frame)
 
         self.show_insights()
     # ==========================================
@@ -342,7 +379,7 @@ class AnalyticsWindow:
         for i in range(len(months)):
             savings.append(income[i] - expense[i])
 
-        fig = plt.Figure(figsize=(6, 4), dpi=100)
+        fig = plt.Figure(figsize=(13 , 3.8), dpi=100)
 
         ax = fig.add_subplot(111)
 
@@ -359,16 +396,19 @@ class AnalyticsWindow:
 
         ax.grid(True)
 
+        fig.tight_layout()
+
         canvas = FigureCanvasTkAgg(fig, parent)
 
         canvas.draw()
 
         canvas.get_tk_widget().pack(
             side="left",
-            padx=20,
-            pady=20
+            expand=True,
+            padx=10,
+            pady=10
         )
-    # ==========================================
+    # ================================
     # Expense Pie Chart
     # ==========================================
 
@@ -382,7 +422,8 @@ class AnalyticsWindow:
         labels = [row[0] for row in data]
         values = [row[1] for row in data]
 
-        fig = plt.Figure(figsize=(5,4), dpi=100)
+        # Bigger figure
+        fig = plt.Figure(figsize=(7,5), dpi=100)
 
         ax = fig.add_subplot(111)
 
@@ -391,22 +432,30 @@ class AnalyticsWindow:
             labels=labels,
             autopct="%1.1f%%",
             startangle=90,
-            shadow=True
+            shadow=True,
+            textprops={"fontsize": 10}
         )
 
         ax.axis("equal")
 
-        ax.set_title("Expense By Category")
+        ax.set_title(
+            "Expense By Category",
+            fontsize=14,
+            fontweight="bold"
+        )
+        plt.subplots_adjust(top=0.8)
+
+        fig.tight_layout()
 
         canvas = FigureCanvasTkAgg(fig, parent)
-
         canvas.draw()
 
         canvas.get_tk_widget().pack(
             side="left",
-            padx=20,
-            pady=20
-        )    
+            expand=True,
+            padx=15,
+            pady=15
+        )
     
     # ==========================================
     # Monthly Income vs Expense
@@ -419,7 +468,7 @@ class AnalyticsWindow:
         if not months:
             return
 
-        fig = plt.Figure(figsize=(6,4), dpi=100)
+        fig = plt.Figure(figsize=(7,4), dpi=100)
 
         ax = fig.add_subplot(111)
 
@@ -449,7 +498,11 @@ class AnalyticsWindow:
 
         ax.grid(axis="y")
 
+        fig.tight_layout()
+
         ax.legend()
+
+        plt.subplots_adjust(top=0.85)
 
         canvas = FigureCanvasTkAgg(fig, parent)
 
@@ -457,8 +510,9 @@ class AnalyticsWindow:
 
         canvas.get_tk_widget().pack(
             side="left",
-            padx=20,
-            pady=20
+            expand=True,
+            padx=10,
+            pady=10
         )
 
     # ==========================================

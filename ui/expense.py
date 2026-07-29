@@ -20,7 +20,7 @@ class ExpenseWindow:
 
         self.root.title("Expense Tracker - Add Expense")
 
-        self.root.geometry("650x650")
+        self.root.geometry("900x820")
 
         self.root.resizable(False, False)
 
@@ -110,7 +110,7 @@ class ExpenseWindow:
             row=0,
             column=0,
             columnspan=2,
-            pady=(25,30)
+            pady=(15,20)
         )
 
         # ==========================================
@@ -128,7 +128,7 @@ class ExpenseWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.date_picker = DateEntry(
@@ -161,7 +161,7 @@ class ExpenseWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.category_var = tk.StringVar()
@@ -210,7 +210,7 @@ class ExpenseWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.description_var = tk.StringVar()
@@ -245,7 +245,7 @@ class ExpenseWindow:
             column=0,
             sticky="w",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.amount_var = tk.StringVar()
@@ -326,13 +326,13 @@ class ExpenseWindow:
             column=0,
             sticky="nw",
             padx=40,
-            pady=12
+            pady=8
         )
 
         self.notes = tk.Text(
             self.card,
             width=35,
-            height=6,
+            height=4,
             font=("Segoe UI",11),
             relief="solid",
             bd=1,
@@ -370,7 +370,7 @@ class ExpenseWindow:
             row=7,
             column=0,
             columnspan=2,
-            pady=(30,25)
+            pady=(15,20)
         )
 
         # ==========================================
