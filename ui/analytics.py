@@ -107,7 +107,7 @@ class AnalyticsWindow:
             bg="white",
             fg="#111827"
         ).pack(
-            pady=(20,25)
+            pady=(10,15)
         )
 
         # ==========================================
@@ -137,7 +137,7 @@ class AnalyticsWindow:
 
         ]
 
-        for title, value, color in cards:
+        for index, (title, value, color) in enumerate(cards):
 
             card = tk.Frame(
                 summary_frame,
@@ -170,17 +170,17 @@ class AnalyticsWindow:
                 bg="white",
                 fg="#374151"
             ).pack(
-                pady=(15,5)
+                pady=(8,2)
             )
 
             tk.Label(
                 card,
                 text=f"₹ {value:,.2f}",
-                font=("Segoe UI",18,"bold"),
+                font=("Segoe UI",16,"bold"),
                 bg="white",
                 fg=color
             ).pack(
-                pady=(0,18)
+                pady=(0,8)
             )
 
         # ==========================================
@@ -193,7 +193,7 @@ class AnalyticsWindow:
         )
 
         button_frame.pack(
-            pady=(10,25)
+            pady=(5,10)
         )
 
         # Refresh Button
@@ -268,7 +268,7 @@ class AnalyticsWindow:
             font=("Segoe UI",12,"bold"),
             padx=10,
             pady=10,
-            height=520
+            height=650
         )
 
         charts_container.pack(
@@ -422,8 +422,7 @@ class AnalyticsWindow:
         labels = [row[0] for row in data]
         values = [row[1] for row in data]
 
-        # Bigger figure
-        fig = plt.Figure(figsize=(7,5), dpi=100)
+        fig = plt.Figure(figsize=(8,5.5), dpi=100)
 
         ax = fig.add_subplot(111)
 
@@ -432,18 +431,16 @@ class AnalyticsWindow:
             labels=labels,
             autopct="%1.1f%%",
             startangle=90,
-            shadow=True,
-            textprops={"fontsize": 10}
+            textprops={"fontsize":9}
         )
-
-        ax.axis("equal")
 
         ax.set_title(
             "Expense By Category",
-            fontsize=14,
-            fontweight="bold"
+            fontsize=12,
+            pad=20
         )
-        plt.subplots_adjust(top=0.8)
+
+        ax.axis("equal")
 
         fig.tight_layout()
 
@@ -451,10 +448,8 @@ class AnalyticsWindow:
         canvas.draw()
 
         canvas.get_tk_widget().pack(
-            side="left",
-            expand=True,
-            padx=15,
-            pady=15
+            fill="both",
+            expand=True
         )
     
     # ==========================================
@@ -468,53 +463,71 @@ class AnalyticsWindow:
         if not months:
             return
 
-        fig = plt.Figure(figsize=(7,4), dpi=100)
-
+        fig = plt.Figure(figsize=(7, 4.8), dpi=100)
         ax = fig.add_subplot(111)
 
         x = range(len(months))
 
+        # Income Bars
         ax.bar(
-            [i-0.2 for i in x],
+            [i - 0.2 for i in x],
             income,
             width=0.4,
             label="Income"
         )
 
+        # Expense Bars
         ax.bar(
-            [i+0.2 for i in x],
+            [i + 0.2 for i in x],
             expense,
             width=0.4,
             label="Expense"
         )
 
+        # X Axis
         ax.set_xticks(list(x))
+        ax.set_xticklabels(
+            months,
+            rotation=25,
+            ha="right",
+            fontsize=9
+        )
 
-        ax.set_xticklabels(months)
-
+        # Labels
         ax.set_ylabel("Amount (₹)")
+        ax.set_xlabel("Month")
 
-        ax.set_title("Monthly Income vs Expense")
+        # Title
+        ax.set_title(
+            "Monthly Income vs Expense",
+            fontsize=14,
+            fontweight="bold",
+            pad=15
+        )
 
-        ax.grid(axis="y")
+        # Grid
+        ax.grid(axis="y", linestyle="--", alpha=0.5)
 
-        fig.tight_layout()
+        # Legend
+        ax.legend(loc="upper right")
 
-        ax.legend()
-
-        plt.subplots_adjust(top=0.85)
+        # Prevent graph from being cut
+        fig.subplots_adjust(
+            left=0.12,
+            right=0.97,
+            top=0.90,
+            bottom=0.22
+        )
 
         canvas = FigureCanvasTkAgg(fig, parent)
-
         canvas.draw()
 
         canvas.get_tk_widget().pack(
-            side="left",
+            fill="both",
             expand=True,
             padx=10,
             pady=10
         )
-
     # ==========================================
     # Refresh Dashboard
     # ==========================================
