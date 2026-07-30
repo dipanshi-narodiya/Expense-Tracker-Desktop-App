@@ -54,199 +54,340 @@ class RegisterWindow:
 
     def create_widgets(self):
 
-        # Main Frame
-        self.main_frame = ttk.Frame(
+        # ==========================================
+        # Root Background
+        # ==========================================
+
+        self.root.configure(bg="#EEF2FF")
+
+        # ==========================================
+        # Main Container
+        # ==========================================
+
+        container = tk.Frame(
             self.root,
-            padding=20
+            bg="#EEF2FF"
         )
 
-        self.main_frame.pack(expand=True)
+        container.pack(
+            fill="both",
+            expand=True
+        )
+
+        # ==========================================
+        # Header
+        # ==========================================
+
+        header = tk.Frame(
+            container,
+            bg="#2563EB",
+            height=80
+        )
+
+        header.pack(fill="x")
+        header.pack_propagate(False)
+
+        tk.Label(
+            header,
+            text="💰 Expense Tracker",
+            bg="#2563EB",
+            fg="white",
+            font=("Segoe UI", 24, "bold")
+        ).pack(pady=18)
+
+        # ==========================================
+        # Main Card
+        # ==========================================
+
+        self.card = tk.Frame(
+            container,
+            bg="white",
+            highlightbackground="#D1D5DB",
+            highlightthickness=1
+        )
+
+        self.card.pack(
+            padx=70,
+            pady=30,
+            fill="both",
+            expand=True
+        )
 
         # ==========================================
         # Title
         # ==========================================
 
-        self.title_label = ttk.Label(
-            self.main_frame,
-            text="💰 Expense Tracker",
-            font=("Arial", 22, "bold")
-        )
-
-        self.title_label.pack(pady=(10, 5))
-
-        # ==========================================
-        # Subtitle
-        # ==========================================
-
-        self.subtitle_label = ttk.Label(
-            self.main_frame,
+        tk.Label(
+            self.card,
             text="Create New Account",
-            font=("Arial", 14)
+            bg="white",
+            fg="#111827",
+            font=("Segoe UI", 20, "bold")
+        ).pack(pady=(25, 5))
+
+        tk.Label(
+            self.card,
+            text="Fill in the details below",
+            bg="white",
+            fg="#6B7280",
+            font=("Segoe UI", 11)
+        ).pack(pady=(0, 25))
+
+        # ==========================================
+        # Form Frame
+        # ==========================================
+
+        form = tk.Frame(
+            self.card,
+            bg="white"
         )
 
-        self.subtitle_label.pack(pady=(0, 25))
+        form.pack(
+            padx=40,
+            fill="x"
+        )
+
+        form.columnconfigure(0, weight=1)
 
         # ==========================================
         # Full Name
         # ==========================================
 
-        self.full_name_label = ttk.Label(
-            self.main_frame,
-            text="Full Name"
-        )
-
-        self.full_name_label.pack(anchor="w")
+        tk.Label(
+            form,
+            text="👤 Full Name",
+            bg="white",
+            fg="#374151",
+            font=("Segoe UI",11,"bold")
+        ).grid(row=0,column=0,sticky="w",pady=(0,5))
 
         self.full_name_var = tk.StringVar()
 
-        self.full_name_entry = ttk.Entry(
-            self.main_frame,
+        self.full_name_entry = tk.Entry(
+            form,
             textvariable=self.full_name_var,
-            width=40
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1
         )
 
-        self.full_name_entry.pack(pady=(0, 10))
+        self.full_name_entry.grid(
+            row=1,
+            column=0,
+            sticky="ew",
+            ipady=6,
+            pady=(0,15)
+        )
 
         # ==========================================
         # Username
         # ==========================================
 
-        self.username_label = ttk.Label(
-            self.main_frame,
-            text="Username"
-        )
-
-        self.username_label.pack(anchor="w")
+        tk.Label(
+            form,
+            text="👤 Username",
+            bg="white",
+            fg="#374151",
+            font=("Segoe UI",11,"bold")
+        ).grid(row=2,column=0,sticky="w",pady=(0,5))
 
         self.username_var = tk.StringVar()
 
-        self.username_entry = ttk.Entry(
-            self.main_frame,
+        self.username_entry = tk.Entry(
+            form,
             textvariable=self.username_var,
-            width=40
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1
         )
 
-        self.username_entry.pack(pady=(0, 10))
+        self.username_entry.grid(
+            row=3,
+            column=0,
+            sticky="ew",
+            ipady=6,
+            pady=(0,15)
+        )
 
         # ==========================================
         # Email
         # ==========================================
 
-        self.email_label = ttk.Label(
-            self.main_frame,
-            text="Email"
-        )
-
-        self.email_label.pack(anchor="w")
+        tk.Label(
+            form,
+            text="📧 Email",
+            bg="white",
+            fg="#374151",
+            font=("Segoe UI",11,"bold")
+        ).grid(row=4,column=0,sticky="w",pady=(0,5))
 
         self.email_var = tk.StringVar()
 
-        self.email_entry = ttk.Entry(
-            self.main_frame,
+        self.email_entry = tk.Entry(
+            form,
             textvariable=self.email_var,
-            width=40
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1
         )
 
-        self.email_entry.pack(pady=(0, 10))
+        self.email_entry.grid(
+            row=5,
+            column=0,
+            sticky="ew",
+            ipady=6,
+            pady=(0,15)
+        )
 
         # ==========================================
         # Password
         # ==========================================
 
-        self.password_label = ttk.Label(
-            self.main_frame,
-            text="Password"
-        )
-
-        self.password_label.pack(anchor="w")
+        tk.Label(
+            form,
+            text="🔒 Password",
+            bg="white",
+            fg="#374151",
+            font=("Segoe UI",11,"bold")
+        ).grid(row=6,column=0,sticky="w",pady=(0,5))
 
         self.password_var = tk.StringVar()
 
-        self.password_entry = ttk.Entry(
-            self.main_frame,
+        self.password_entry = tk.Entry(
+            form,
             textvariable=self.password_var,
-            width=40,
-            show="*"
+            show="*",
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1
         )
 
-        self.password_entry.pack(pady=(0, 10))
+        self.password_entry.grid(
+            row=7,
+            column=0,
+            sticky="ew",
+            ipady=6,
+            pady=(0,15)
+        )
 
         # ==========================================
         # Confirm Password
         # ==========================================
 
-        self.confirm_password_label = ttk.Label(
-            self.main_frame,
-            text="Confirm Password"
-        )
-
-        self.confirm_password_label.pack(anchor="w")
+        tk.Label(
+            form,
+            text="🔒 Confirm Password",
+            bg="white",
+            fg="#374151",
+            font=("Segoe UI",11,"bold")
+        ).grid(row=8,column=0,sticky="w",pady=(0,5))
 
         self.confirm_password_var = tk.StringVar()
 
-        self.confirm_password_entry = ttk.Entry(
-            self.main_frame,
+        self.confirm_password_entry = tk.Entry(
+            form,
             textvariable=self.confirm_password_var,
-            width=40,
-            show="*"
+            show="*",
+            font=("Segoe UI",11),
+            relief="solid",
+            bd=1
         )
 
-        self.confirm_password_entry.pack(pady=(0, 20))
-                # ==========================================
-        # Show Password Checkbox
+        self.confirm_password_entry.grid(
+            row=9,
+            column=0,
+            sticky="ew",
+            ipady=6,
+            pady=(0,15)
+        )
+
+        # ==========================================
+        # Show Password
         # ==========================================
 
-        # Variable to store checkbox state (True/False)
         self.show_password_var = tk.BooleanVar()
 
-        # Checkbox
-        self.show_password_checkbox = ttk.Checkbutton(
-            self.main_frame,
+        self.show_password_checkbox = tk.Checkbutton(
+            form,
             text="Show Password",
             variable=self.show_password_var,
-            command=self.toggle_password
+            command=self.toggle_password,
+            bg="white",
+            activebackground="white",
+            font=("Segoe UI",10)
         )
 
-        self.show_password_checkbox.pack(anchor="w", pady=(0, 20))
-
+        self.show_password_checkbox.grid(
+            row=10,
+            column=0,
+            sticky="w",
+            pady=(0,20)
+        )
 
         # ==========================================
         # Register Button
         # ==========================================
 
         self.register_button = tk.Button(
-            self.main_frame,
-            text="Register",
-            font=("Arial", 12, "bold"),
-            bg="#0078D7",
+            self.card,
+            text="📝 Register Account",
+            bg="#2563EB",
             fg="white",
-            activebackground="#005A9E",
+            activebackground="#1D4ED8",
             activeforeground="white",
-            width=20,
+            font=("Segoe UI",12,"bold"),
+            relief="flat",
             cursor="hand2",
+            width=22,
+            height=2,
             command=self.register_user
         )
 
-        self.register_button.pack(pady=10)
-
+        self.register_button.pack(pady=(10,20))
 
         # ==========================================
         # Login Link
         # ==========================================
 
-        self.login_label = tk.Label(
-            self.main_frame,
-            text="Already have an account? Login",
-            fg="blue",
-            cursor="hand2",
-            font=("Arial", 10, "underline")
+        login_frame = tk.Frame(
+            self.card,
+            bg="white"
         )
 
-        self.login_label.pack(pady=10)
+        login_frame.pack(pady=(0,25))
 
-        # Click Event
-        self.login_label.bind("<Button-1>", self.open_login)
-            # ==========================================
+        tk.Label(
+            login_frame,
+            text="Already have an account?",
+            bg="white",
+            fg="#6B7280",
+            font=("Segoe UI",10)
+        ).pack(side="left")
+
+        self.login_label = tk.Label(
+            login_frame,
+            text=" Login",
+            bg="white",
+            fg="#2563EB",
+            cursor="hand2",
+            font=("Segoe UI",10,"bold","underline")
+        )
+
+        self.login_label.pack(side="left")
+
+        self.login_label.bind(
+            "<Button-1>",
+            self.open_login
+        )
+
+        # ==========================================
+        # Focus
+        # ==========================================
+
+        self.full_name_entry.focus_set()
+
+
+       # ==========================================
     # Show / Hide Password
     # ==========================================
 
