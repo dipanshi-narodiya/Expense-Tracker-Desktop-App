@@ -39,18 +39,17 @@ class RegisterWindow:
 
     def create_window(self):
 
-        # Window Title
         self.root.title("Expense Tracker - Register")
 
-        # Window Size
-        self.root.geometry("700x650")
+        # Fixed window size
+        self.root.geometry("900x980")
 
-        # Disable Resize
+        # Prevent resizing
         self.root.resizable(False, False)
 
     # ==========================================
-    # Create Widgets
-    # ==========================================
+    # Create Widgets   
+     # ==========================================
 
     def create_widgets(self):
 
@@ -71,7 +70,6 @@ class RegisterWindow:
 
         container.pack(
             fill="both",
-            expand=True
         )
 
         # ==========================================
@@ -81,7 +79,7 @@ class RegisterWindow:
         header = tk.Frame(
             container,
             bg="#2563EB",
-            height=80
+            height=60
         )
 
         header.pack(fill="x")
@@ -92,7 +90,7 @@ class RegisterWindow:
             text="💰 Expense Tracker",
             bg="#2563EB",
             fg="white",
-            font=("Segoe UI", 24, "bold")
+            font=("Segoe UI", 20, "bold")
         ).pack(pady=18)
 
         # ==========================================
@@ -107,8 +105,8 @@ class RegisterWindow:
         )
 
         self.card.pack(
-            padx=70,
-            pady=30,
+            padx=60,
+            pady=8,
             fill="both",
             expand=True
         )
@@ -122,8 +120,8 @@ class RegisterWindow:
             text="Create New Account",
             bg="white",
             fg="#111827",
-            font=("Segoe UI", 20, "bold")
-        ).pack(pady=(25, 5))
+            font=("Segoe UI", 18, "bold")
+        ).pack(pady=(15, 5))
 
         tk.Label(
             self.card,
@@ -131,7 +129,7 @@ class RegisterWindow:
             bg="white",
             fg="#6B7280",
             font=("Segoe UI", 11)
-        ).pack(pady=(0, 25))
+        ).pack(pady=(0, 15))
 
         # ==========================================
         # Form Frame
@@ -143,7 +141,8 @@ class RegisterWindow:
         )
 
         form.pack(
-            padx=40,
+            padx=55,
+            pady=5,
             fill="x"
         )
 
@@ -175,8 +174,8 @@ class RegisterWindow:
             row=1,
             column=0,
             sticky="ew",
-            ipady=6,
-            pady=(0,15)
+            ipady=4,
+            pady=(0,10)
         )
 
         # ==========================================
@@ -205,8 +204,8 @@ class RegisterWindow:
             row=3,
             column=0,
             sticky="ew",
-            ipady=6,
-            pady=(0,15)
+            ipady=4,
+            pady=(0,10)
         )
 
         # ==========================================
@@ -235,8 +234,8 @@ class RegisterWindow:
             row=5,
             column=0,
             sticky="ew",
-            ipady=6,
-            pady=(0,15)
+            ipady=4,
+            pady=(0,10)
         )
 
         # ==========================================
@@ -266,8 +265,8 @@ class RegisterWindow:
             row=7,
             column=0,
             sticky="ew",
-            ipady=6,
-            pady=(0,15)
+            ipady=4,
+            pady=(0,10)
         )
 
         # ==========================================
@@ -297,8 +296,8 @@ class RegisterWindow:
             row=9,
             column=0,
             sticky="ew",
-            ipady=6,
-            pady=(0,15)
+            ipady=4,
+            pady=(0,10)
         )
 
         # ==========================================
@@ -321,7 +320,7 @@ class RegisterWindow:
             row=10,
             column=0,
             sticky="w",
-            pady=(0,20)
+            pady=(0,10)
         )
 
         # ==========================================
@@ -339,7 +338,7 @@ class RegisterWindow:
             relief="flat",
             cursor="hand2",
             width=22,
-            height=2,
+            height=1,
             command=self.register_user
         )
 
@@ -351,8 +350,10 @@ class RegisterWindow:
 
         login_frame = tk.Frame(
             self.card,
-            bg="white"
+            bg="white",
+            height=10
         )
+
 
         login_frame.pack(pady=(0,25))
 
