@@ -104,6 +104,10 @@ python main.py
 
 ---
 
+## Data Flow Diagram
+
+![Data Flow Diagram](screenshots/dfd.png)
+
 # 📸 Application Screenshots
 
 ## 🔐 Login Page

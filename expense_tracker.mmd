@@ -1,0 +1,48 @@
+flowchart TD
+
+    A([User]) --> B[Login / Register]
+
+    B --> C{Authentication}
+
+    C -->|Success| D[Dashboard]
+    C -->|Fail| B
+
+    D --> E[Add Income]
+    D --> F[Add Expense]
+    D --> G[Reports]
+    D --> H[Analytics]
+    D --> I[Budget]
+    D --> J[Settings]
+
+    E --> K[(SQLite Database)]
+    F --> K
+    I --> K
+    J --> K
+
+    G --> K
+    H --> K
+
+    G --> L[Search Records]
+    G --> M[Edit Record]
+    G --> N[Delete Record]
+    G --> O[Export PDF]
+    G --> P[Export Excel]
+
+    H --> Q[Pie Chart]
+    H --> R[Bar Chart]
+    H --> S[Savings Chart]
+    H --> T[Financial Insights]
+
+    L --> K
+    M --> K
+    N --> K
+    O --> U([PDF File])
+    P --> V([Excel File])
+
+    J --> W[Change Password]
+    J --> X[Edit Profile]
+    W --> K
+    X --> K
+
+    D --> Y[Logout]
+    Y --> B
